@@ -2,7 +2,7 @@ import React from 'react'
 import Sketch from 'react-p5'
 import * as ml5 from 'ml5'
 
-function App() {
+function Trainer() {
   let video;
   let poseNet;
   let pose;
@@ -120,4 +120,4 @@ function App() {
   return <Sketch setup={setup} draw={draw} />
 }
 
-export default App
+export default Trainer
