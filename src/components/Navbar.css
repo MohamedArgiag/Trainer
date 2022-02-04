@@ -1,0 +1,14 @@
+.navbar {
+    background: #045;
+}
+
+.navbar-nav{
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    color: #4E4350;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    font-family: Verdana, Tahoma, sans-serif;
+    color: #4E4350;
+}

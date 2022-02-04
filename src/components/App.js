@@ -8,6 +8,8 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
+import Settings from "./Settings"
+import Trainer from "./Trainer"
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
               <Route path="/signup" element={<Signup/>} />
               <Route path="/login" element={<Login/>} />
               <Route path="/forgot-password" element={<ForgotPassword/>} />
+              <Route path="/settings" element={<Settings/>} />
+              <Route path="/trainer" element={<Trainer/>} />
             </Routes>
           </AuthProvider>
         </Router>

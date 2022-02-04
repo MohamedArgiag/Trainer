@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import './Login.css'
 
 const Login = ()  =>{
   const emailRef = useRef()
@@ -31,6 +32,7 @@ const Login = ()  =>{
 
   return (
     <>
+    <h1>Welcome to TrainerAI</h1>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
@@ -44,7 +46,7 @@ const Login = ()  =>{
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" ref={passwordRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <Button disabled={loading} className="w-100 mt-3" type="submit">
               Log In
             </Button>
           </Form>

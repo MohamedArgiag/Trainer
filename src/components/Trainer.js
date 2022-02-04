@@ -1,6 +1,7 @@
 import React from 'react'
 import Sketch from 'react-p5'
 import * as ml5 from 'ml5'
+import { Link } from "react-router-dom"
 
 function Trainer() {
   let video;
@@ -14,7 +15,8 @@ function Trainer() {
   let pushCounter = 0;
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(640, 480);
+    var canvas = p5.createCanvas(640, 480);
+    canvas.position(130, 210);
     video = p5.createCapture(p5.VIDEO);
     video.hide();
     poseNet = ml5.poseNet(video, modelLoaded);
@@ -117,7 +119,15 @@ function Trainer() {
 
 
   
-  return <Sketch setup={setup} draw={draw} />
+  return (
+    <>
+    <Sketch setup={setup} draw={draw} />
+    
+    <Link to="/" class="btn btn-primary btn-lg ml-auto">End Exercise</Link>
+    
+    </>
+    
+  ) 
 }
 
 export default Trainer
