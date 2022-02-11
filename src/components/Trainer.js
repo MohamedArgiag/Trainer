@@ -8,6 +8,8 @@ function Trainer() {
   let poseNet;
   let pose;
   let skeleton;
+  let stage;
+  let counter=0;
 
   let brain;
   let poseLabel = "";
@@ -104,12 +106,51 @@ function Trainer() {
     classifyPose();
   }
 
+  const calculate_angle = (a,b,c) =>{
+
+    let radians = Math.atan2(c[1]-b[1], c[0]-b[0]) - Math.atan2(a[1]-b[1], a[0]-b[0])
+    let angle = Math.abs(radians*180.0/Math.PI)
+
+    if (angle > 180.0){
+      angle = 360-angle;
+    }
+    return angle
+  }
+
+
+
   const gotPoses = (poses) => {
+    let shoulder = []
+    let elbow = [] 
+    let wrist = []
+    
+
     if (poses.length > 0) {
       pose = poses[0].pose;
       skeleton = poses[0].skeleton;
+
+
+      shoulder = [pose.leftShoulder.x , pose.leftShoulder.y]
+      elbow = [pose.leftElbow.x , pose.leftElbow.y]
+      wrist = [pose.leftWrist.x , pose.leftWrist.y]
+
+      let angle = calculate_angle(shoulder, elbow, wrist)
+      
+      if (angle > 150){
+        stage = "down"
+      }  
+      if (angle < 30 && stage === "down"){
+        stage = "up"
+        counter ++
+        console.log(counter)
+      }
+     
+
     }
   }
+
+
+ 
 
   const modelLoaded = () => {
     console.log('poseNet ready');

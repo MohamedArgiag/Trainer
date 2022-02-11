@@ -10,6 +10,8 @@ import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import Settings from "./Settings"
 import Trainer from "./Trainer"
+import Option from "./Options"
+import Curl from "./Curl"
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword/>} />
               <Route path="/settings" element={<Settings/>} />
               <Route path="/trainer" element={<Trainer/>} />
+              <Route path="/option" element={<Option/>} />
+              <Route path="/curl" element={<Curl/>} />
             </Routes>
           </AuthProvider>
         </Router>

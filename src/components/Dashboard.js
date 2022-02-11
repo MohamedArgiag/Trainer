@@ -9,7 +9,7 @@ export default function Dashboard() {
     <>
     <NavBar/>
 
-    <Link to="/trainer" className="btn btn-primary btn-lg">Start Exercise</Link>
+    <Link to="/option" className="btn btn-primary btn-lg w-100 text-center mt-3">Choose Exercise</Link>
 
   
       

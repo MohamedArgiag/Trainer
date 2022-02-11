@@ -12,7 +12,7 @@ const NavBar= ()  =>{
                 <a class="nav-link" href="/">Home</a>
               </li>
               <li class="nav-item mx-3">
-                <a class="nav-link" href="trainer">Trainer</a>
+                <a class="nav-link" href="option">Trainer</a>
               </li>
               <li class="nav-item mx-3">
                 <a class="nav-link" href="settings">Settings</a>
