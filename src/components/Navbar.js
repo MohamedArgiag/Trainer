@@ -15,6 +15,9 @@ const NavBar= ()  =>{
                 <a class="nav-link" href="option">Trainer</a>
               </li>
               <li class="nav-item mx-3">
+                <a class="nav-link" href="log">Logs</a>
+              </li>
+              <li class="nav-item mx-3">
                 <a class="nav-link" href="settings">Settings</a>
               </li>
               <li class="nav-item mx-3">

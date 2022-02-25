@@ -12,6 +12,8 @@ import Settings from "./Settings"
 import Trainer from "./Trainer"
 import Option from "./Options"
 import Curl from "./Curl"
+import Squat from "./Squat"
+import Log from "./Log"
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
               <Route path="/trainer" element={<Trainer/>} />
               <Route path="/option" element={<Option/>} />
               <Route path="/curl" element={<Curl/>} />
+              <Route path="/squat" element={<Squat/>} />
+              <Route path="/log" element={<Log/>} />
             </Routes>
           </AuthProvider>
         </Router>

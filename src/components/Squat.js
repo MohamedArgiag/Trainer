@@ -2,32 +2,16 @@ import { React } from 'react'
 import Sketch from 'react-p5'
 import * as ml5 from 'ml5'
 import { Link } from "react-router-dom"
-import { db, auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
 
-function Curl() {
+function Squat() {
   let video;
   let poseNet;
   let pose;
   let skeleton;
-  let leftStage;
-  let rightStage;
-  let leftCounter=0;
-  let rightCounter=0;
+  
+  let Stage;
+  let Counter=0;
 
-  const postsCollectionRef = db.collection("posts");
-  let navigate = useNavigate();
-
-  const createPost = async () => {
-    await postsCollectionRef.add ({
-      exercise: "Curl",
-      leftArm: leftCounter,
-      RightArm: rightCounter,
-      author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
-    });
-    navigate("/log");
-  };
- 
 
   const setup = (p5, canvasParentRef) => {
     var canvas = p5.createCanvas(640, 480);
@@ -70,11 +54,8 @@ function Curl() {
     p5.noStroke();
     p5.textSize(25);
     p5.text("Left arm: ", 50, 30);
-    p5.text(leftCounter, 180, 30);
+    p5.text(Counter, 180, 30);
 
-
-    p5.text("right arm: ", 50, 70);
-    p5.text(rightCounter, 180, 70);
   
   }
 
@@ -92,8 +73,8 @@ function Curl() {
 
 
   const gotPoses = (poses) => {
-    let leftShoulder, leftElbow, leftWrist = []
-    let rightShoulder, rightElbow, rightWrist = []
+    let leftHip, leftKnee, leftAnkle = []
+    let rightHip, rightKnee, rightAnkle = []
     
 
     if (poses.length > 0) {
@@ -101,36 +82,31 @@ function Curl() {
       skeleton = poses[0].skeleton;
 
 
-      leftShoulder = [pose.leftShoulder.x , pose.leftShoulder.y]
-      leftElbow = [pose.leftElbow.x , pose.leftElbow.y]
-      leftWrist = [pose.leftWrist.x , pose.leftWrist.y]
+      leftHip = [pose.leftHip.x , pose.leftHip.y]
+      leftKnee = [pose.leftKnee.x , pose.leftKnee.y]
+      leftAnkle = [pose.leftAnkle.x , pose.leftAnkle.y]
 
-      let LeftAngle = calculate_angle(leftShoulder, leftElbow, leftWrist)
+      let LeftAngle = calculate_angle(leftHip, leftKnee, leftAnkle)
+
+
+      rightHip = [pose.rightHip.x , pose.rightHip.y]
+      rightKnee = [pose.rightKnee.x , pose.rightKnee.y]
+      rightAnkle = [pose.rightAnkle.x , pose.rightAnkle.y]
+
+      let rightAngle = calculate_angle(rightHip, rightKnee, rightAnkle)
+
+
       
-      if (LeftAngle > 160){
-        leftStage = "down"
+      if (LeftAngle > 150 && rightAngle > 150){
+        Stage = "standing";
+        console.log(Stage)
+
       }  
-      if (LeftAngle < 30 && leftStage === "down"){
-        leftStage = "up"
-        leftIncrease()
+      if (LeftAngle < 40 && rightAngle < 40 && Stage === "standing"){
+        Stage = "down"
+        Increase()
       }
 
-
-
-
-      rightShoulder = [pose.rightShoulder.x , pose.rightShoulder.y]
-      rightElbow = [pose.rightElbow.x , pose.rightElbow.y]
-      rightWrist = [pose.rightWrist.x , pose.rightWrist.y]
-
-      let rightAngle = calculate_angle(rightShoulder, rightElbow, rightWrist)
-      
-      if (rightAngle > 160){
-        rightStage = "down"
-      }  
-      if (rightAngle < 30 && rightStage === "down"){
-        rightStage = "up"
-        rightIncrease()
-      }
     }
   }
 
@@ -138,19 +114,10 @@ function Curl() {
     console.log('poseNet ready');
   }
 
-  const leftIncrease = () => {
-    leftCounter ++;
-      console.log(leftCounter);
+  const Increase = () => {
+    Counter ++;
+      console.log(Counter);
   };
-
-  const rightIncrease = () => {
-    rightCounter ++;
-    console.log(rightCounter);
-    
-};
-
-
-
 
 
 
@@ -161,7 +128,6 @@ function Curl() {
 
 
     <div class="container text-right">
-        <button onClick={createPost}> End Exercise</button>
         <Link to="/" class="btn btn-primary btn-lg w-100 ">End Exercise</Link>
     </div>
     
@@ -170,4 +136,4 @@ function Curl() {
   ) 
 }
 
-export default Curl
+export default Squat
