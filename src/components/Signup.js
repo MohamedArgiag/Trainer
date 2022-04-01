@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import { db } from "../firebase";
 
 export default function Signup() {
   const emailRef = useRef()
@@ -11,7 +12,8 @@ export default function Signup() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-
+  
+  
   async function handleSubmit(e) {
     e.preventDefault()
 
@@ -22,7 +24,13 @@ export default function Signup() {
     try {
       setError("")
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
+      const usersCollectionRef = db.collection("users");
+      const response = await signup(emailRef.current.value, passwordRef.current.value)
+      await usersCollectionRef.doc(response.user.uid).set({
+        email: response.user.email,
+        uid: response.user.uid,
+        friends: [],
+      });
       navigate("/", {replace:true})
     } catch(e) {
       console.log(e)

@@ -14,6 +14,7 @@ import Option from "./Options"
 import Curl from "./Curl"
 import Squat from "./Squat"
 import Log from "./Log"
+import Friend from "./Friend"
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
               <Route path="/curl" element={<Curl/>} />
               <Route path="/squat" element={<Squat/>} />
               <Route path="/log" element={<Log/>} />
+              <Route path="/friend" element={<Friend/>} />
             </Routes>
           </AuthProvider>
         </Router>

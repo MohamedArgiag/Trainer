@@ -15,7 +15,10 @@ const NavBar= ()  =>{
                 <a class="nav-link" href="option">Trainer</a>
               </li>
               <li class="nav-item mx-3">
-                <a class="nav-link" href="log">Logs</a>
+                <a class="nav-link" href="log">Feed</a>
+              </li>
+              <li class="nav-item mx-3">
+                <a class="nav-link" href="friend">Friend</a>
               </li>
               <li class="nav-item mx-3">
                 <a class="nav-link" href="settings">Settings</a>
@@ -23,6 +26,7 @@ const NavBar= ()  =>{
               <li class="nav-item mx-3">
                 <a class="nav-link" href="login" onClick={handleLogout} >Log out</a>
               </li>
+              
 
             </ul>
         </div>

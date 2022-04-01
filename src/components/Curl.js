@@ -1,7 +1,6 @@
 import { React } from 'react'
 import Sketch from 'react-p5'
 import * as ml5 from 'ml5'
-import { Link } from "react-router-dom"
 import { db, auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +14,7 @@ function Curl() {
   let leftCounter=0;
   let rightCounter=0;
 
-  const postsCollectionRef = db.collection("posts");
+  const postsCollectionRef = db.collection("users").doc(auth.currentUser.uid).collection("posts");
   let navigate = useNavigate();
 
   const createPost = async () => {
@@ -23,7 +22,10 @@ function Curl() {
       exercise: "Curl",
       leftArm: leftCounter,
       RightArm: rightCounter,
-      author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
+      like: 0,
+      uid: auth.currentUser.uid,
+      email: auth.currentUser.email,
+      time: Date(),
     });
     navigate("/log");
   };
@@ -149,20 +151,14 @@ function Curl() {
     
 };
 
-
-
-
-
-
-
   return (
     <>
     <Sketch setup={setup} draw={draw} />
 
 
     <div class="container text-right">
-        <button onClick={createPost}> End Exercise</button>
-        <Link to="/" class="btn btn-primary btn-lg w-100 ">End Exercise</Link>
+        <button class="btn btn-primary btn-lg w-100 " onClick={createPost}> End Exercise</button>
+        
     </div>
     
     </>
