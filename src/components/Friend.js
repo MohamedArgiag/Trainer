@@ -31,8 +31,9 @@ export default function Friend() {
     return (
         <>
         <NavBar/>
+        <h1 className="w-100 text-center mb-8">Add Friend </h1>
         <input id="userEmail" type="email" placeholder="Search.."/>
-        <button onClick={addFriend}>Add Friend</button>
+        <button className="btn btn-primary btn-lg w-50 text-center mt-3" onClick={addFriend}>Add Friend</button>
 
 
 

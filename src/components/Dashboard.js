@@ -32,7 +32,7 @@ export default function Dashboard() {
             <strong>
               Reps: {post.leftarm || 0}
             </strong>
-            <button>💗 {post.like || 0}</button>
+            <button class="btn btn-light">💗 {post.like || 0}</button>
         </div>
         )
       })}

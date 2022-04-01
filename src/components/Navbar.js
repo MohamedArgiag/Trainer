@@ -21,6 +21,9 @@ const NavBar= ()  =>{
                 <a class="nav-link" href="friend">Friend</a>
               </li>
               <li class="nav-item mx-3">
+                <a class="nav-link" href="challenge">Challenge</a>
+              </li>
+              <li class="nav-item mx-3">
                 <a class="nav-link" href="settings">Settings</a>
               </li>
               <li class="nav-item mx-3">

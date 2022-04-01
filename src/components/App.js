@@ -15,6 +15,8 @@ import Curl from "./Curl"
 import Squat from "./Squat"
 import Log from "./Log"
 import Friend from "./Friend"
+import Challenge from "./Challenge"
+import CreateChallenge from "./CreateChallenge"
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
               <Route path="/squat" element={<Squat/>} />
               <Route path="/log" element={<Log/>} />
               <Route path="/friend" element={<Friend/>} />
+              <Route path="/challenge" element={<Challenge/>} />
+              <Route path="/challengecreate" element={<CreateChallenge/>} />
             </Routes>
           </AuthProvider>
         </Router>
