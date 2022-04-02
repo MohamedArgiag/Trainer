@@ -17,6 +17,7 @@ import Log from "./Log"
 import Friend from "./Friend"
 import Challenge from "./Challenge"
 import CreateChallenge from "./CreateChallenge"
+import BicepCurls from "./BicepCurls.js"
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
               <Route path="/trainer" element={<Trainer/>} />
               <Route path="/option" element={<Option/>} />
               <Route path="/curl" element={<Curl/>} />
+              <Route path="/bicep-curl" element={<BicepCurls/>} />
               <Route path="/squat" element={<Squat/>} />
               <Route path="/log" element={<Log/>} />
               <Route path="/friend" element={<Friend/>} />

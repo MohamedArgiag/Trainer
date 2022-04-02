@@ -2,11 +2,19 @@ import React, { useEffect, useState } from "react"
 import NavBar from "./Navbar"
 import { db, auth } from "../firebase";
 import './Log.css';
+import firebase from 'firebase/app'
 
 export default function Log() {
   const [postLists, setPostList] = useState([]);
   const user = db.collection("users");
 
+  const like = async (frienduid) => {
+    console.log(frienduid)
+    const friendPosts = db.collection("users").doc(frienduid).collection("posts").get();
+    await friendPosts.update({
+      like: firebase.database.ServerValue.increment(1)
+  })
+  }
  
 
   useEffect(() => {
@@ -24,7 +32,7 @@ export default function Log() {
       setPostList(feed.sort((a, b) => Date.parse(b.time) - Date.parse(a.time)));
     }
     disPosts();
-},[user]);
+},[]);
 
 
   return (
@@ -38,7 +46,7 @@ export default function Log() {
             <strong>
               Reps: {post.leftarm || 0}
             </strong>
-            <button>💗 {post.like || 0}</button>
+            <button onClick={like(post.uid)}>💗 {post.like || 0}</button>
             
         </div>
         )
