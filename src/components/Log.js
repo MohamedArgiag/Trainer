@@ -41,12 +41,12 @@ export default function Log() {
       {postLists.map((post) => {
         return (
           <div className="card">
-            <h2>By {post.email}</h2>
+            <h2 key="{post.email}">By {post.email}</h2>
             <h2>Exercise: {post.exercise}</h2>
             <strong>
               Reps: {post.leftarm || 0}
             </strong>
-            <button onClick={like(post.uid)}>💗 {post.like || 0}</button>
+            <button class="btn btn-light" onClick={like(post.uid)}>💗 {post.like || 0}</button>
             
         </div>
         )

@@ -24,6 +24,7 @@ export default function Dashboard() {
 
     <Link to="/option" className="btn btn-primary btn-lg w-100 text-center mt-3">Choose Exercise</Link>
 
+
     {postLists.map((post) => {
         return (
           <div className="card">

@@ -18,6 +18,8 @@ import Friend from "./Friend"
 import Challenge from "./Challenge"
 import CreateChallenge from "./CreateChallenge"
 import BicepCurls from "./BicepCurls.js"
+import FriendChallenge from "./FriendChallenge.js"
+import Chat from "./Chat.js"
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
               <Route path="/friend" element={<Friend/>} />
               <Route path="/challenge" element={<Challenge/>} />
               <Route path="/challengecreate" element={<CreateChallenge/>} />
+              <Route path="/friendChallenge" element={<FriendChallenge/>} />
+              <Route path="/chat" element={<Chat/>} />
             </Routes>
           </AuthProvider>
         </Router>
