@@ -2,38 +2,64 @@ import React from "react"
 import NavBar from "./Navbar"
 import { Link } from "react-router-dom"
 import "./Options.css"
+import pushup from "../img/Pushups-up.png"
+import pushupdown from "../img/Pushups-down.png"
+import curl from "../img/curl.jpg"
 
 export default function Option() {
 
 
   return (
-    <div style={{ justifyContent: "flex-start", flexDirection: "column", display: "flex" }}>
+    <div>
     <NavBar/>
 
-
-
-
-    <div class="card text-white bg-primary mb-3 mt-5">
-      <div class="card-body">
-      <Link to="/trainer" className="btn btn-primary btn-lg w-100 text-center p-5 ">Push up counter</Link>
+    <div class="row">
+      <div id="col1" class="column">
+        <h2 class="h2">Push Up</h2>
+          <img src={ pushup } alt="..."></img>
+        <div className="buttonDivs">
+        <a href="/trainer">
+        <button class="cybr-btn">
+            PUSH UPS<span aria-hidden>_</span>
+            <span aria-hidden class="cybr-btn__glitch">PUSH UPS_</span>
+            <span aria-hidden class="cybr-btn__tag">R25</span>
+          </button>
+        </a>
+          
+        </div>
       </div>
-    </div>
 
-    <div class="card text-white bg-primary mb-3">
-      <div class="card-body">
-      <Link to="/Squat" className="btn btn-primary btn-lg w-100 text-center p-5">Squat counter</Link>
+
+      <div id="col2" class="column">
+        <h2 class="h2">Squat</h2>
+          <img src={ pushupdown } alt="..."></img>
+        <div className="buttonDivs">
+        <a href="/Squat">
+        <button class="cybr-btn">
+            SQUAT_<span aria-hidden>_</span>
+            <span aria-hidden class="cybr-btn__glitch">SQUAT_</span>
+            <span aria-hidden class="cybr-btn__tag">R25</span>
+          </button>
+        </a>
+        
+        </div>
       </div>
-    </div>
 
-    <div class="card text-white bg-primary mb-3">
-      <div class="card-body">
-      <Link to="/curl" className="btn btn-primary btn-lg w-100 text-center p-5">Curl counter</Link>
-      </div>
-    </div>
 
-    <div class="card text-white bg-primary mb-3">
-      <div class="card-body">
-      <Link to="/bicep-curl" className="btn btn-primary btn-lg w-100 text-center p-5">Bicep Curl counter</Link>
+      <div id="col3" class="column">
+        <h2 class="h2">Bicep Curl</h2>
+          <img src={ curl } alt="..."></img>
+
+        <div className="buttonDivs">
+          <a href="/bicep-curl">
+          <button class="cybr-btn">
+            BICEP CURL<span aria-hidden>_</span>
+            <span aria-hidden class="cybr-btn__glitch">BICEP CURL_</span>
+            <span aria-hidden class="cybr-btn__tag">R25</span>
+          </button>
+          </a>
+        </div>
+        
       </div>
     </div>
 

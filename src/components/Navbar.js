@@ -1,40 +1,59 @@
 import React from 'react';
 import './Navbar.css'
-import logo from '../img/logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGear, faMedal, faDumbbell, faComments, faAddressBook  } from '@fortawesome/free-solid-svg-icons'
+import logo from "../img/logo4.png"
+
+import { auth } from "../firebase";
+
 
 const NavBar= ()  =>{
 
     return (
-        <nav class="navbar navbar-expand-lg navbar-dark py-3 fixed-top rounded-bottom"> 
-        <div class="container-fluid justify-content-center">
-          <a class="navbar-brand mx-5" href="/">
-            <img src={ logo } alt='logo'/>
-          </a>
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="log">Feed</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="option">Trainer</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="challenge">Challenge</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="friend">Friend</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="chat">Chat</a>
-              </li>
-              <li class="nav-item mx-3">
-                <a class="nav-link" href="settings">Settings</a>
-              </li>
-              
-              
 
-            </ul>
-        </div>
-      </nav>
+      <>
+      <ul>
+        <li class='logo'>
+          <a href="/">
+            <img src={ logo } alt="logo"></img>
+          </a>
+        </li>
+
+        <li class='contact'>
+          <a href="friend">
+          <FontAwesomeIcon icon={ faAddressBook } color="black" size="3x" bounce ></FontAwesomeIcon>
+          </a>
+        </li>
+
+        <li class='chat'>
+          <a href="chat">
+          <FontAwesomeIcon icon={ faComments } color="black" size="3x" bounce ></FontAwesomeIcon>
+          </a>
+        </li>
+
+        <li class='trainer'>
+          <a href="option">
+          <FontAwesomeIcon icon={ faDumbbell } color="black" size="3x" bounce ></FontAwesomeIcon>
+          </a>
+        </li>
+
+        <li class='challenge'>
+          <a href="challenge">
+          <FontAwesomeIcon icon={ faMedal } color="black" size="3x" bounce ></FontAwesomeIcon>
+          </a>
+        </li>
+
+        <li class='setting'>
+          <a href="settings">
+            <FontAwesomeIcon icon={ faGear } color="black" size="3x" spin ></FontAwesomeIcon>
+          </a>
+        </li>
+        
+      </ul>
+      
+      
+      
+        </>
     )
 }
 
