@@ -1,6 +1,5 @@
 import React from "react"
 import NavBar from "./Navbar"
-import { Link } from "react-router-dom"
 import "./Options.css"
 import pushup from "../img/Pushups-up.png"
 import pushupdown from "../img/Pushups-down.png"
@@ -18,11 +17,9 @@ export default function Option() {
         <h2 class="h2">Push Up</h2>
           <img src={ pushup } alt="..."></img>
         <div className="buttonDivs">
-        <a href="/trainer">
-        <button class="cybr-btn">
-            PUSH UPS<span aria-hidden>_</span>
-            <span aria-hidden class="cybr-btn__glitch">PUSH UPS_</span>
-            <span aria-hidden class="cybr-btn__tag">R25</span>
+        <a class="button" href="/trainer">
+          <button class="but">
+            PUSH UPS
           </button>
         </a>
           
@@ -34,11 +31,9 @@ export default function Option() {
         <h2 class="h2">Squat</h2>
           <img src={ pushupdown } alt="..."></img>
         <div className="buttonDivs">
-        <a href="/Squat">
-        <button class="cybr-btn">
-            SQUAT_<span aria-hidden>_</span>
-            <span aria-hidden class="cybr-btn__glitch">SQUAT_</span>
-            <span aria-hidden class="cybr-btn__tag">R25</span>
+        <a class="button" href="/Squat">
+        <button class="but">
+            SQUAT
           </button>
         </a>
         
@@ -51,11 +46,9 @@ export default function Option() {
           <img src={ curl } alt="..."></img>
 
         <div className="buttonDivs">
-          <a href="/bicep-curl">
-          <button class="cybr-btn">
-            BICEP CURL<span aria-hidden>_</span>
-            <span aria-hidden class="cybr-btn__glitch">BICEP CURL_</span>
-            <span aria-hidden class="cybr-btn__tag">R25</span>
+          <a class="button" href="/bicep-curl">
+          <button class="but">
+            BICEP CURL
           </button>
           </a>
         </div>
