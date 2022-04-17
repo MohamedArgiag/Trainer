@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-<<<<<<< HEAD
 
 import './fonts/Montserrat/static/Montserrat-Medium.ttf'
 
-=======
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react"
-<<<<<<< HEAD
 import NavBar from "./navbar/Navbar"
-=======
-import NavBar from "./Navbar"
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
 import { db, auth } from "../firebase";
 import './Log.css';
 import firebase from 'firebase/app'

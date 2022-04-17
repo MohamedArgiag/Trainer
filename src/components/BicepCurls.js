@@ -3,14 +3,9 @@ import { Pose, POSE_CONNECTIONS, POSE_LANDMARKS_LEFT, POSE_LANDMARKS_RIGHT } fro
 import Webcam from "react-webcam";
 import * as cam from "@mediapipe/camera_utils";
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
-<<<<<<< HEAD
 import NavBar from "./navbar/Navbar";
 import { db, auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-=======
-import NavBar from "./Navbar";
-
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
 
 // import './BicepCurl.css'
 
@@ -44,7 +39,6 @@ const Counter = ({rightAngle, leftAngle}) => {
       setLeftCounter(leftCounter+1)
 
     }
-<<<<<<< HEAD
   }, [rightAngle, leftAngle])
   
   const postsCollectionRef = db.collection("users").doc(auth.currentUser.uid).collection("posts");
@@ -62,9 +56,6 @@ const Counter = ({rightAngle, leftAngle}) => {
     });
     navigate("/log");
   };
-=======
-  },[rightAngle,leftAngle])
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
 
   return (
     <>
@@ -72,13 +63,9 @@ const Counter = ({rightAngle, leftAngle}) => {
      <div>Right Stage: {rightStage}</div>
      <br />
      <div>Left  Counter: {leftCounter}</div>
-<<<<<<< HEAD
       <div>Left Stage: {leftStage}</div>
       <button class="btn btn-primary btn-lg w-100 " onClick={createPost}> End Exercise</button>
 
-=======
-     <div>Left Stage: { leftStage}</div>
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
     </>
   );
 }
@@ -192,11 +179,8 @@ const BicepCurls = () => {
       camera.current.start();
     }
   }, [])
-<<<<<<< HEAD
 
  
-=======
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
   
   
   return (

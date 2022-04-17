@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import NavBar from "./navbar/Navbar";
 import "./CreateChallenge.css";
@@ -40,39 +39,6 @@ export default function CreateChallenge() {
       <NavBar />
       <div class="testbox">
         {/* <form action="/">
-=======
-import NavBar from "./Navbar";
-import './CreateChallenge.css';
-import { useNavigate } from "react-router-dom";
-import { db, auth } from "../firebase";
-
-
-export default function CreateChallenge() {
-    const challengesCollection = db.collection("users").doc(auth.currentUser.uid).collection("challenges");
-    let navigate = useNavigate();
-    
-
-    const createChal = async () => {
-        const name = document.getElementById("challengeName").value;
-        const type = document.getElementById("typeExer").value;
-        const start = document.getElementById("startDate").value;
-        const end = document.getElementById("endDate").value;
-
-        await challengesCollection.add ({
-          challengeName: name,
-          TypeExercise: type,
-          startDate: start,
-          endDate: end,
-          challengemembers: [auth.currentUser.uid, ]
-        });
-      };
-
-    return (
-        <>
-        <NavBar/>
-        <div class="testbox">
-        <form action="/">
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
             <h1>Exercise Challenge</h1>
 
             <h4>Challenge Name<span>*</span></h4>
@@ -90,7 +56,6 @@ export default function CreateChallenge() {
             <h4>Start Date</h4>
             <input id="startDate" type="date" name="name" required/>
             <i class="fas fa-calendar-alt"></i>
-<<<<<<< HEAD
             <DatePicker onChange={changeStartDate} value={startDate} />
             <h4>End Date</h4>
             <input id="endDate" type="date" name="name" required/>
@@ -178,26 +143,3 @@ const FriendList = () => {
   )
 }
 
-=======
-
-            <h4>End Date</h4>
-            <input id="endDate" type="date" name="name" required/>
-            <i class="fas fa-calendar-alt"></i>
-            
-            <div class="btn-block">
-            <button className="btn btn-primary btn-lg w-100 text-center mt-3" type="submit" onClick={createChal}>Create Challenge</button>
-            </div>
-        </form>
-        </div>
-        
-    
-        </>
-
-        
-
-    )
-
-
-
-}
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd

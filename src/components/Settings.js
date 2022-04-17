@@ -2,11 +2,7 @@ import React, { useState } from "react"
 import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
-<<<<<<< HEAD
 import NavBar from "./navbar/Navbar"
-=======
-import NavBar from "./Navbar"
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
 
 export default function Settings() {
   const [error, setError] = useState("")

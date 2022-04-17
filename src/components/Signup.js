@@ -24,36 +24,24 @@ export default function Signup() {
     try {
       setError("")
       setLoading(true)
-<<<<<<< HEAD
       console.log('redirecting to login')
       const usersCollectionRef = db.collection("users");
       const response = await signup(emailRef.current.value, passwordRef.current.value)
       console.log('redirecting to login')
-=======
-      const usersCollectionRef = db.collection("users");
-      const response = await signup(emailRef.current.value, passwordRef.current.value)
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
       await usersCollectionRef.doc(response.user.uid).set({
         email: response.user.email,
         uid: response.user.uid,
         friends: [],
       });
-<<<<<<< HEAD
-=======
-      navigate("/", {replace:true})
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
     } catch(e) {
       console.log(e)
       setError("Failed to create an account")
     }
 
     setLoading(false)
-<<<<<<< HEAD
     console.log('redirecting to login')
     navigate("/login") 
 
-=======
->>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
   }
 
   return (
