@@ -25,8 +25,12 @@ function App() {
   return (
     
       
+<<<<<<< HEAD
     <div>
 
+=======
+      <div>
+>>>>>>> 347e8eb9f612538c0fca1e6a11e27530125fe1fd
         <Router>
           <AuthProvider>
             <Routes>
