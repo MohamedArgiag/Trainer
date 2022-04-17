@@ -1,0 +1,20 @@
+
+    body, div, form, input, select { 
+    font-family: Montserrat;
+    }
+
+
+
+    .formContainer {
+        display: flex;
+        margin: 2em;
+        flex-direction: column;
+    }
+
+
+span {
+    font-size: x-large;
+    font-weight: bold;
+    padding: 1em 0 .25em 0;
+}
+  
