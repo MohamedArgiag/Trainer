@@ -5,32 +5,46 @@ import { useNavigate } from "react-router-dom";
 import { db, auth, getUserWithUsername } from "../firebase";
 import DatePicker from "react-date-picker";
 import { useForm } from "react-hook-form";
-
+import firebase from "firebase/app";
 
 
 export default function CreateChallenge() {
-  const challengesCollection = db
-    .collection("users")
-    .doc(auth.currentUser.uid)
-    .collection("challenges");
-  let navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const [data, setData] = useState("");
   const [startDate, changeStartDate] = useState(new Date());
   const [endDate, changeEndDate] = useState(new Date());
+  const [friends, setFriends] = useState([]);
+  const [challengers, setChallengers] = useState([]);
 
-  const createChal = async () => {
-    const name = document.getElementById("challengeName").value;
-    const type = document.getElementById("typeExer").value;
-    const start = document.getElementById("startDate").value;
-    const end = document.getElementById("endDate").value;
+  const createChallengeForUser = async (data) => {
+    console.log(data);
+    // Create Challenge
+    console.log({
+      challengeName: data.challengeName,
+      exerciseType: data.exerciseType,
+      startDate: startDate,
+      endDate: endDate,
+      challengeMembers: [auth.currentUser.uid],
+    });
 
-    await challengesCollection.add({
-      challengeName: name,
-      TypeExercise: type,
-      startDate: start,
-      endDate: end,
-      challengemembers: [auth.currentUser.uid],
+    const createdChallenge = await db.collection("challenges").add({
+      challengeName: data.challengeName,
+      exerciseType: data.exerciseType,
+      startDate: startDate,
+      endDate: endDate,
+      challengeMembers: [auth.currentUser.uid],
+    });
+
+    console.log(createdChallenge);
+
+    // Send to Invite to Challengers
+    challengers.map(async (challenger) => {
+
+      await db
+        .collection("users")
+        .doc(challenger.uid)
+        .update({
+          pendingChallenges: firebase.firestore.FieldValue.arrayUnion(createdChallenge.id),
+        });
     });
   };
 
@@ -38,61 +52,32 @@ export default function CreateChallenge() {
     <>
       <NavBar />
       <div class="testbox">
-        {/* <form action="/">
-            <h1>Exercise Challenge</h1>
-
-            <h4>Challenge Name<span>*</span></h4>
-            <input id="challengeName" type="text" name="name" />
-
-            <h4>Type of Exercise<span>*</span></h4>
-            <select id="typeExer">
-            <option value=""> </option>
-            <option value="pushups">Push Ups</option>
-            <option value="squats">Squats</option>
-            <option value="curls">Curls</option>
-            </select>
-
-            
-            <h4>Start Date</h4>
-            <input id="startDate" type="date" name="name" required/>
-            <i class="fas fa-calendar-alt"></i>
-            <DatePicker onChange={changeStartDate} value={startDate} />
-            <h4>End Date</h4>
-            <input id="endDate" type="date" name="name" required/>
-            <i class="fas fa-calendar-alt"></i>
-            <DatePicker onChange={changeEndDate} value={endDate} />
-            <div class="btn-block">
-            <button className="btn btn-primary btn-lg w-100 text-center mt-3" type="submit" onClick={createChal}>Create Challenge</button>
-            </div>
-        </form> */}
-
-        <form className="formContainer" onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
-          <span>
-            Challenge Name: 
-          </span>
-          <input {...register("name")} placeholder="" />
-          <span>
-            Challenge Description: 
-          </span>
+        <form
+          className="formContainer"
+          onSubmit={handleSubmit((data) => {
+            createChallengeForUser(data);
+          })}
+        >
+          <span>Challenge Name:</span>
+          <input {...register("challengeName")} placeholder="" />
+          <span>Challenge Description:</span>
           <input {...register("description")} placeholder="" />
-          <span>
-            Workout Type: 
-          </span>
-          <select {...register("workoutType")}>
-            <option value="Curk">Curl</option>
+          <span>Workout Type:</span>
+          <select {...register("exerciseType")}>
+            <option value="Curl">Curl</option>
             <option value="Squat">Squat</option>
             <option value="Pushup">Pushup</option>
           </select>
-          <span>
-            Start Date:
-          </span>
+          <span>Start Date:</span>
           <DatePicker onChange={changeStartDate} value={startDate} />
-          <span>
-            End Date:
-          </span>
+          <span>End Date:</span>
           <DatePicker onChange={changeEndDate} value={endDate} />
-          <FriendList/>
-          <p>{data}</p>
+          <FriendList
+            friends={friends}
+            setFriends={setFriends}
+            challengers={challengers}
+            setChallengers={setChallengers}
+          />
           <input type="submit" />
         </form>
       </div>
@@ -100,46 +85,65 @@ export default function CreateChallenge() {
   );
 }
 
-
-const FriendList = () => {
-
-  const [friends, setFriends] = useState([])
-
+const FriendList = ({ friends, setFriends, challengers, setChallengers }) => {
   useEffect(() => {
     getFriendsList();
-  },[])
+  }, []);
 
   const getFriendsList = async () => {
-    console.log(auth.currentUser.uid)
+    console.log(auth.currentUser.uid);
 
     const user = db.collection("users");
     const res = await user.where("email", "==", auth.currentUser.email).get();
-    const friendList = res.docs.map(doc => doc.data())[0].friends;
-    console.log(friendList)
-
+    const friendList = res.docs.map((doc) => doc.data())[0].friends;
+    console.log(friendList);
 
     // Fetching Friends
+    const tmp = [];
     friendList.map(async (friend) => {
       const friendData = await user.where("uid", "==", friend).get();
-      const parsedData = friendData.docs.map(doc => doc.data())[0]
-      console.log(friendData.docs.map(doc => doc.data())[0])
+      const parsedData = friendData.docs.map((doc) => doc.data())[0];
+      console.log(parsedData);
+      tmp.push(parsedData);
+      setFriends((f) => [...f, parsedData]);
+    });
+  };
 
-      setFriends([...friends, parsedData])
-    })
-     
-     
-    }
-  
+  const addToChallenge = (newF) => {
+    setFriends((fr) => fr.filter((f) => f.uid !== newF.uid));
+    setChallengers((cl) => [...cl, newF]);
+  };
 
-  
+  const removeFromChallenge = (newF) => {
+    setChallengers((cl) => cl.filter((c) => c.uid !== newF.uid));
+    setFriends((fr) => [...fr, newF]);
+  };
+
   return (
     <>
-    <div>Challengers: </div>
-      <button>Add Challengers</button>
-      {
-        friends.length>0 ? friends.map((f) => <div key={f.uid}>{f.email}</div>) : null
-      }
-    </>
-  )
-}
+      <div className="friendsList">
+        <span>Friends List:</span>
+        <h4>(Click to add)</h4>
+        {friends.length > 0
+          ? friends.map((f) => (
+              <div onClick={() => addToChallenge(f)} key={f.uid}>
+                {f.email}
+              </div>
+            ))
+          : null}
+      </div>
 
+      <div className="challengersList">
+        <span>Challengers:</span>
+        <h4>(Click to Remove)</h4>
+        {challengers.length > 0
+          ? challengers.map((cl, ind) => (
+              <div onClick={() => removeFromChallenge(cl)} key={ind}>
+                {cl.email}
+              </div>
+            ))
+          : null}
+      </div>
+    </>
+  );
+};

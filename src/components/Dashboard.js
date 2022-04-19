@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import NavBar from "./navbar/Navbar";
 import { Link } from "react-router-dom";
 import { db, auth } from "../firebase";
+import firebase from "firebase/app";
 import "./Dashboard.scss";
+import { faSleigh } from "@fortawesome/free-solid-svg-icons";
 
 export default function Dashboard() {
   const [postLists, setPostList] = useState([]);
@@ -13,7 +15,11 @@ export default function Dashboard() {
 
   const disPosts = async () => {
     const res2 = await posts.where("uid", "==", auth.currentUser.uid).get();
-    const exercise = res2.docs.map((doc) => doc.data());
+    console.log(res2);
+    const exercise = res2.docs.map((doc) => {
+      console.log(doc);
+      return { doc: doc, docData: doc.data() };
+    });
     setPostList(exercise);
   };
 
@@ -33,26 +39,63 @@ export default function Dashboard() {
       </div>
 
       {postLists.map((post) => {
-        return (
-          <div className="workoutLogContainer">
-            <div className="workoutLogFirst">
-              <div className="workoutLogSecond">
-                <h2>{post.email}</h2>
-                <h3 className={post.exercise.toLowerCase()}>{post.exercise}</h3>
-                <h5>{post.time}</h5>
-              </div>
-              <div className="workoutCount">{post.leftArm || 0}</div>
-            </div>
-            <div className="likeContainer">
-            <label className="likeButton" class="like">
-              <input type="checkbox"/>
-              <div class="hearth" />
-              </label>
-              <h3 class="p-0 m-0">{post.like || 0}</h3>
-            </div>
-          </div>
-        );
+        console.log(post);
+        return <Post post={post} />;
       })}
     </>
   );
 }
+
+export const Post = ({ post }) => {
+  const [liked, setLiked] = useState(
+    post.docData.likedList.includes(auth.currentUser.uid)
+  );
+
+  const updatedLikedList = () => {
+    post.docData.likedList = liked
+      ? post.docData.likedList.filter((p) => p !== auth.currentUser.uid)
+      : [...post.docData.likedList, auth.currentUser.uid];
+    return post.docData.likedList;
+  };
+
+  
+  const likePost = (postRef, prevCount) => {
+    postRef.update({
+      like: liked ? prevCount - 1 : prevCount + 1,
+      likedList: updatedLikedList(),
+    });
+
+    liked
+      ? (post.docData.like = post.docData.like - 1)
+      : (post.docData.like = post.docData.like + 1);
+
+    setLiked(!liked);
+  };
+
+  return (
+    <div className="workoutLogContainer">
+      <div className="workoutLogFirst">
+        <div className="workoutLogSecond">
+          <h2>{post.docData.email}</h2>
+          <h3 className={post.docData.exercise.toLowerCase()}>
+            {post.docData.exercise}
+          </h3>
+          <h5>{post.docData.time}</h5>
+        </div>
+        <div className="workoutCount">{post.docData.leftArm || 0}</div>
+      </div>
+      <div className="likeContainer">
+        <label className="likeButton" class="like">
+          <input
+            onChange={(val) => likePost(post.doc.ref, post.docData.like)}
+            className="heartInput"
+            type="checkbox"
+            checked={liked}
+          />
+          <div class="hearth" />
+        </label>
+        <h3 class="p-0 m-0">{post.docData.like || 0}</h3>
+      </div>
+    </div>
+  );
+};

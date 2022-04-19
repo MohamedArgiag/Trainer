@@ -50,6 +50,7 @@ const Counter = ({rightAngle, leftAngle}) => {
       leftArm: leftCounter,
       RightArm: rightCounter,
       like: 0,
+      likedList: [], // TODO: add to others
       uid: auth.currentUser.uid,
       email: auth.currentUser.email,
       time: Date(),
