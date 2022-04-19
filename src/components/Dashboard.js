@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./navbar/Navbar";
-import { Link } from "react-router-dom";
 import { db, auth } from "../firebase";
-import firebase from "firebase/app";
 import "./Dashboard.scss";
-import { faSleigh } from "@fortawesome/free-solid-svg-icons";
 
 export default function Dashboard() {
   const [postLists, setPostList] = useState([]);

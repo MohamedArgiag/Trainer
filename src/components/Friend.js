@@ -1,51 +1,66 @@
+import React, { useEffect, useState } from "react"
 import NavBar from "./navbar/Navbar";
 import { db, auth } from "../firebase";
-import firebase from "firebase/app";
-import toast, { Toaster } from "react-hot-toast";
+import Modal from "./FriendModal";
 import './Friend.css';
 
 export default function Friend() {
+  const [friendLists, setFriendList] = useState([]);
   const users = db.collection("users");
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const addFriend = async () => {
-    const email = document.getElementById("userEmail").value;
-    const res = await users.where("email", "==", email).get();
-    const usertoAdd = res.docs.map((doc) => doc.data())[0];
+  const disPosts = async () => {
+    const res = await users.where("email", "==", auth.currentUser.email).get();
+    const friendList = res.docs.map(doc => doc.data())[0].friends;
+    const feed = [];
 
-    if (!usertoAdd) {
-      toast.error("USER DOES NOT EXIST!!!!");
-      return;
+    for(let i = 0; i < friendList.length; i++){
+      const friendinfo = await users.where("uid", "==", friendList[i]).get();   
+      const friendName = friendinfo.docs.map(doc => doc.data())[0].email;
+      console.log(friendName)
+      feed.push(friendName);
+
     }
+    setFriendList(feed);
 
-    if (auth.currentUser.uid === usertoAdd.uid) {
-      toast.error("CANNOT ADD YOURSELF!!!!");
-      return;
-    }
+  }
 
-    await users.doc(auth.currentUser.uid).update({
-      friends: firebase.firestore.FieldValue.arrayUnion(usertoAdd.uid),
-    });
-
-    // alert("✅ ACCOUNT FOLLOWED SUCCESSFULLY.")
-    toast.success("ACCOUNT FOLLOWED SUCCESSFULLY.");
-  };
+  useEffect(() => {
+    disPosts();
+},[]);
 
   return (
     <>
       <NavBar />
-      <Toaster />
-      <h1 className="w-100 text-center mb-8">Add Friend </h1>
-      <div className="addFriendContainer">
-        <span>
-          <input id="userEmail" type="email" placeholder="Search.." />
-        </span>
+
+      <div className="modalButton">
         <button
-          className="btn btn-primary btn-lg w-50 text-center mt-3"
-          onClick={addFriend}
+          className="openModalBtn"
+          onClick={() => {
+            setModalOpen(true);
+          }}
         >
-          Add
+          ADD FRIEND
         </button>
+        {modalOpen && <Modal setOpenModal={setModalOpen} />}
+
       </div>
+      
+
+
+
+
+
+
+      <h1 className="w-100 text-center mb-5">Friends List </h1>
+
+      {friendLists.map((friend) => {
+        return (
+          <div className="friendName">
+            <h2 className="friend">{friend}</h2>
+          </div>
+        )
+      })}
     </>
   );
 }

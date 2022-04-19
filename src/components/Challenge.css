@@ -1,25 +1,4 @@
-.addFriendContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.friendName{
-    margin: auto;
-    width: 60%;
-    border-bottom: 3px solid #9457F8;
-    border-top: 3px solid #9457F8;
-    border-right: 3px solid #9457F8;
-    border-left: 3px solid #9457F8;
-
-}
-
-.friend{
-    padding-left: 1em;
-}
-
-.openModalBtn{
+.ChallButton{
     border-radius: 15px;
     background-color:#9a4ef1;
     color:#FFFFFF;
@@ -34,14 +13,14 @@
     text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
     text-align:center;
     transition: all 0.2s;
-    width: 10em;
+    width: 30%;
 }
 
-.openModalBtn:hover{
+.ChallButton:hover{
     border-color: rgba(255,255,255,1);
-  }
+}
 
-.modalButton{
+.challDiv{
     margin: auto;
     text-align: center;
     padding-top: 3em;
