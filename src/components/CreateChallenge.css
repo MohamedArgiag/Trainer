@@ -1,0 +1,38 @@
+
+    body, div, form, input, select { 
+    font-family: Montserrat;
+    }
+
+
+
+    .formContainer {
+        display: flex;
+        margin: 2em;
+        flex-direction: column;
+    }
+
+
+span {
+    font-size: x-large;
+    font-weight: bold;
+    padding: 1em 0 .25em 0;
+}
+  
+
+.friendsList {
+    
+    border-radius: 25px;
+    padding: 1em;
+    margin: 1.5em;
+    background-color: rgb(233, 255, 248);
+    outline: 2px solid rgb(158, 197, 162);
+}
+
+
+
+.challengersList {
+    border-radius: 25px;
+    padding: 1em;
+    margin: 1.5em;
+    outline: 1px solid rgb(185, 181, 181);
+}

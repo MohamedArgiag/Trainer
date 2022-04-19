@@ -1,0 +1,19 @@
+
+h1{
+    width: 1200px; 
+    margin-bottom: 10px; 
+    padding-left: 20px; 
+    font-size: 110px;
+    
+}
+
+
+@media (min-width: 1200px) {
+    h1{
+        width: 1200px; 
+        margin-bottom: 10px; 
+        padding-left: 20px; 
+        font-size: 110px;
+        
+    }
+}
