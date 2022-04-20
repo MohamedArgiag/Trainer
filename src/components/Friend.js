@@ -48,10 +48,6 @@ export default function Friend() {
       
 
 
-
-
-
-
       <h1 className="w-100 text-center mb-5">Friends List </h1>
 
       {friendLists.map((friend) => {

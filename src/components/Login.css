@@ -17,3 +17,73 @@ h1{
         
     }
 }
+
+
+.title{
+    margin: auto;
+}
+
+.formdiv{
+    border-bottom: 3px solid #9457F8;
+    border-top: 3px solid #9457F8;
+    border-right: 3px solid #9457F8;
+    border-left: 3px solid #9457F8;
+    margin-top: 3em;
+    width: 30em;
+    margin: auto;
+    text-align: center;
+}
+
+.LoginButton, .forgotButton{
+    border-radius: 15px;
+    color:#FFFFFF;
+    padding: 1em;
+    border:0.16em solid rgba(255,255,255,0);
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+    text-align:center;
+    transition: all 0.2s;
+    width: 50%;
+}
+
+.LoginButton{
+    background-color:#9a4ef1;
+}
+
+.forgotButton{
+    background-color:#310479;
+    margin-bottom: 2em;
+}
+
+.LoginButton:hover, .forgotButton:hover{
+    border-color: rgba(255,255,255,1);
+}
+
+.loginDiv{
+    margin: auto;
+    text-align: center;
+    padding-top: 3em;
+}
+
+.heading{
+    color: #310479;
+}
+
+.image{
+    margin: auto;
+    text-align: center;
+    margin-bottom: 4em;
+    width: 200px;
+    height: 120px;
+}
+
+.image img{
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
