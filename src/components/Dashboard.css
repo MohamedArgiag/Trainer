@@ -1,6 +1,52 @@
-#id button{
-    position: absolute;
-    top: 0px;
-    right: 0px;
+.dropdownBtn{
+    border-radius: 15px;
+    background-color:#9a4ef1;
+    color:#FFFFFF;
+    padding: 1em;
+    border:0.16em solid rgba(255,255,255,0);
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+    text-align:center;
+    transition: all 0.2s;
+    width: 12em;
+    margin: auto;
 }
 
+.dropdownBtn:hover{
+    border-color: rgba(255,255,255,1);
+  }
+
+.dropdowndiv{
+    margin: auto;
+    text-align: center;
+    padding-top: 3em;
+}
+
+.dropdowndiv .dropdownBtn{
+    font-weight: bold;
+    box-shadow: 3px 3px 10px 6px rgba(0,0,0,0.06);
+}
+
+.dropdown-content{
+    width: 10rem;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+    margin: auto;
+}
+
+.dropdown-item:hover{
+    background-color: #9a4ef1;
+    color: white;
+    
+}

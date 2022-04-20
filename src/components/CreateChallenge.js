@@ -78,7 +78,10 @@ export default function CreateChallenge() {
             challengers={challengers}
             setChallengers={setChallengers}
           />
-          <input type="submit" />
+          <div className="FormButton">
+            <input className="createButton" type="submit" />
+          </div>
+          
         </form>
       </div>
     </>

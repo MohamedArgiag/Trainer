@@ -1,98 +1,48 @@
-import React, { useEffect, useState } from "react";
 import NavBar from "./navbar/Navbar";
-import { db, auth } from "../firebase";
-import "./Dashboard.scss";
+import Log from "./Log"
+import Myposts from "./Myposts";
+import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown  } from '@fortawesome/free-solid-svg-icons'
+import "./Dashboard.css"
 
 export default function Dashboard() {
-  const [postLists, setPostList] = useState([]);
-  const posts = db
-    .collection("users")
-    .doc(auth.currentUser.uid)
-    .collection("posts");
+  const [isActive, setIsActive] = useState(false);
+  const [posts, setPosts] = useState("My Posts");
+  let content;
 
-  const disPosts = async () => {
-    const res2 = await posts.where("uid", "==", auth.currentUser.uid).get();
-    console.log(res2);
-    const exercise = res2.docs.map((doc) => {
-      console.log(doc);
-      return { doc: doc, docData: doc.data() };
-    });
-    setPostList(exercise);
-  };
+  if(posts === "My Posts"){
+    content = <Myposts/>;
+  }
 
-  useEffect(() => {
-    disPosts();
-  }, []);
+  if(posts === "Friend Posts"){
+    content = <Log/>;
+  }
 
   return (
     <>
       <NavBar />
+      <div className="dropdowndiv">
+        <div className="dropdownBtn" onClick={(e) => setIsActive(!isActive)}>
+          {posts}
+          <FontAwesomeIcon  icon={ faAngleDown } color="white" size="1x"></FontAwesomeIcon>
+          </div>
 
-      <div
-        onClick={disPosts}
-        className="btn btn-primary btn-lg w-100 text-center mt-3"
-      >
-        Refresh
+          {isActive && (
+            <div className="dropdown-content">
+            <div className="dropdown-item" onClick={(e) => setPosts("My Posts")}>
+              My Posts
+            </div>
+            <div className="dropdown-item" onClick={(e) => setPosts("Friend Posts")}>
+              Friend's Posts
+            </div>
+          </div>
+          )}
       </div>
 
-      {postLists.map((post) => {
-        console.log(post);
-        return <Post post={post} />;
-      })}
+    {content}
+
     </>
   );
 }
 
-export const Post = ({ post }) => {
-  const [liked, setLiked] = useState(
-    post.docData.likedList.includes(auth.currentUser.uid)
-  );
-
-  const updatedLikedList = () => {
-    post.docData.likedList = liked
-      ? post.docData.likedList.filter((p) => p !== auth.currentUser.uid)
-      : [...post.docData.likedList, auth.currentUser.uid];
-    return post.docData.likedList;
-  };
-
-  
-  const likePost = (postRef, prevCount) => {
-    postRef.update({
-      like: liked ? prevCount - 1 : prevCount + 1,
-      likedList: updatedLikedList(),
-    });
-
-    liked
-      ? (post.docData.like = post.docData.like - 1)
-      : (post.docData.like = post.docData.like + 1);
-
-    setLiked(!liked);
-  };
-
-  return (
-    <div className="workoutLogContainer">
-      <div className="workoutLogFirst">
-        <div className="workoutLogSecond">
-          <h2>{post.docData.email}</h2>
-          <h3 className={post.docData.exercise.toLowerCase()}>
-            {post.docData.exercise}
-          </h3>
-          <h5>{post.docData.time}</h5>
-        </div>
-        <div className="workoutCount">{post.docData.leftArm || 0}</div>
-      </div>
-      <div className="likeContainer">
-        <label className="likeButton" class="like">
-          <input
-            onChange={(val) => likePost(post.doc.ref, post.docData.like)}
-            className="heartInput"
-            type="checkbox"
-            checked={liked}
-          />
-          <div class="hearth" />
-        </label>
-        <h3 class="p-0 m-0">{post.docData.like || 0}</h3>
-      </div>
-    </div>
-  );
-};

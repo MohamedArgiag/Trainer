@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import { db, auth } from "../firebase";
-import './Log.css';
+import "./Myposts.scss";
 
-export default function Log() {
+export default function Myposts() {
   const [postLists, setPostList] = useState([]);
-  const user = db.collection("users");
+  const posts = db
+    .collection("users")
+    .doc(auth.currentUser.uid)
+    .collection("posts");
 
   const disPosts = async () => {
-    const res = await user.where("email", "==", auth.currentUser.email).get();
-    const friendList = res.docs.map(doc => doc.data())[0].friends;
-    const feed = [];
-
-    for(let i = 0; i < friendList.length; i++){
-      const friendPosts = await db.collection("users").doc(friendList[i]).collection("posts").get();
-      //const friendExercise = friendPosts.docs.map(doc => doc.data());
-      const friendExercise = friendPosts.docs.map((doc) => {
-        return { doc: doc, docData: doc.data() };
-      });
-      feed.push(...friendExercise);
-
-    }
-    setPostList(feed.sort((a, b) => Date.parse(b.time) - Date.parse(a.time)));
-  }
- 
+    const res2 = await posts.where("uid", "==", auth.currentUser.uid).get();
+    console.log(res2);
+    const exercise = res2.docs.map((doc) => {
+      console.log(doc);
+      return { doc: doc, docData: doc.data() };
+    });
+    setPostList(exercise);
+  };
 
   useEffect(() => {
     disPosts();
-},[]);
-
+  }, []);
 
   return (
     <>
@@ -36,7 +30,7 @@ export default function Log() {
         return <Post post={post} />;
       })}
     </>
-  )
+  );
 }
 
 export const Post = ({ post }) => {
