@@ -33,6 +33,7 @@ export default function CreateChallenge() {
       endDate: endDate,
       challengeMembers: [auth.currentUser.uid],
       challengeId: "",
+      challenger: auth.currentUser.email,
     });
 
     console.log(createdChallenge);

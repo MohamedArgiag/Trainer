@@ -25,3 +25,47 @@
     text-align: center;
     padding-top: 3em;
 }
+
+.acceptbutton{
+    padding: 0.25em;
+    margin: 0.25em;
+    color: black;
+    border: 3px solid #ffffff;
+    background-color: #ffffff;
+    flex-direction: row;
+}
+
+
+.acceptbutton:hover{
+    border-radius: 1em;
+    padding: 0.4em;
+    margin: 0.1em;
+    color: white;
+    border: 3px solid #066914;
+}
+
+.acceptContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rejectbutton{
+    padding: 0.25em;
+    margin: 0.25em;
+    color: black;
+    border: 3px solid #ffffff;
+    background-color: #ffffff;
+    flex-direction: row;
+
+}
+
+.rejectbutton:hover{
+    border-radius: 1em;
+    padding: 0.4em;
+    margin: 0.1em;
+    color: white;
+    border: 3px solid #940909;
+
+}

@@ -2,44 +2,88 @@ import React, { useEffect, useState } from "react"
 import NavBar from "./navbar/Navbar";
 import { db, auth } from "../firebase";
 import "./Challenge.css"
+import firebase from "firebase/app";
+import toast, { Toaster } from "react-hot-toast";
+import { faCheck, faCancel  } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Challenge() {
-  const [postLists, setPostList] = useState([]);
+  const [challengeInvites, setChallengeInvites] = useState([]);
   const user = db.collection("users");
   const challenges = db.collection("challenges");
+  const [currentUser, setCurrentUser] = useState()
+  const [pendingChallenges, setPendingChallenges] = useState([])
+  const [currentChallenges, setCurrentChallenges] = useState([])
 
-  const PendingChallenges = async () => {
-    const res = await user.where("email", "==", auth.currentUser.email).get();
-    const friendList = res.docs.map(doc => doc.data())[0].pendingChallenges;
-    console.log(friendList)
-    const feed = [];
+  const updatePendingInvites = (challengeId) => {
+    console.log('current user: ',currentUser);
+    db.collection("users").doc(auth.currentUser.uid).update({
+      pendingChallenges: pendingChallenges.filter((p) => p !== challengeId),
+      currentChallenges:firebase.firestore.FieldValue.arrayUnion(challengeId)
+    })
 
-
-    for(let i = 0; i < friendList.length; i++){
-      const friendPosts = await challenges.where("challengeId", "==", friendList[i]).get();
-      console.log(friendPosts)
-      //const friendExercise = friendPosts.docs.map(doc => doc.data());
-      const friendExercise = friendPosts.docs.map((doc) => {
-        return { doc: doc, docData: doc.data() };
-      });
-      console.log(friendExercise)
-      feed.push(...friendExercise);
-
-    }
-    setPostList(feed.sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate)));
+    setPendingChallenges(pendingChallenges.filter((p) => p !== challengeId))
+    toast.success("SUCCESSFULLY ADDED CHALLENGE.");
   }
 
+  const rejectPendingInvites = (challengeId) => {
+    console.log('current user: ',currentUser);
+    db.collection("users").doc(auth.currentUser.uid).update({
+      pendingChallenges: pendingChallenges.filter((p) => p !== challengeId),
+    })
 
+    setPendingChallenges(pendingChallenges.filter((p) => p !== challengeId))
+    toast.error("CHALLENGE REJECTED");
+  }
+  
+  const getPendingChallenges = async () => {
+    
+
+
+    const currentUserTmp = await user.where("email", "==", auth.currentUser.email).get();
+    setCurrentUser(currentUserTmp)
+    const pendingChallengesTmp = currentUserTmp.docs.map(doc => doc.data())[0].pendingChallenges;
+    const currentChallengesTmp = currentUserTmp.docs.map(doc => doc.data())[0].currentChallenges;
+
+    setPendingChallenges((p) => pendingChallengesTmp);
+    setCurrentChallenges((c) => currentChallengesTmp);
+
+    console.log(pendingChallengesTmp);
+    console.log(currentChallengesTmp);
+
+
+  }
+
+  const getChallengeData = async () => {
+    const feed = [];
+    for(let i = 0; i < pendingChallenges.length; i++){
+      const challenge = await challenges.where("challengeId", "==", pendingChallenges[i]).get();
+      console.log(challenge)
+      //const friendExercise = friendPosts.docs.map(doc => doc.data());
+      const challengData = challenge.docs.map((doc) => {
+        return { doc: doc, docData: doc.data() };
+      });
+      console.log(challengData)
+      feed.push(...challengData);
+
+    }
+    setChallengeInvites(feed.sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate)));
+  }
   
   useEffect(() => {
-    PendingChallenges();
+    getChallengeData();
+  },[pendingChallenges])
+
+
+  useEffect(() => {
+    getPendingChallenges();
 },[]);
 
 
   return (
     <>
       <NavBar />
-
+      <Toaster />
       <div className="challDiv">
         <a href="challengecreate">
           <button className="ChallButton">
@@ -48,10 +92,26 @@ export default function Challenge() {
 
         </a>
       </div>
+      <div className="challDiv">
+        <a href="challengecreate">
+          <button className="ChallButton">
+            Pending Challenge
+          </button>
 
-      {postLists.map((post) => {
-        console.log(post);
-        return <Post post={post}/> ;
+        </a>
+      </div>
+      <div className="challDiv">
+        <a href="challengecreate">
+          <button className="ChallButton">
+            Current Challenges
+          </button>
+
+        </a>
+      </div>
+
+      {challengeInvites.map((challengeInvite, id) => {
+        console.log(challengeInvite);
+        return <ChallengeInvites key={challengeInvite.challengName} updatePendingInvites={updatePendingInvites} challengeInvite={challengeInvite} rejectPendingInvites={rejectPendingInvites}/> ;
       })}
 
 
@@ -59,52 +119,51 @@ export default function Challenge() {
   );
 }
 
-export const Post = ({ post }) => {
-  const [liked, setLiked] = useState();
-
-  const updatedLikedList = () => {
-    post.docData.likedList = liked
-      ? post.docData.likedList.filter((p) => p !== auth.currentUser.uid)
-      : [...post.docData.likedList, auth.currentUser.uid];
-    return post.docData.likedList;
-  };
-
+const ChallengeInvites = ({ rejectPendingInvites, updatePendingInvites, challengeInvite }) => {
   
-  const likePost = (postRef, prevCount) => {
-    postRef.update({
-      like: liked ? prevCount - 1 : prevCount + 1,
-      likedList: updatedLikedList(),
-    });
 
-    liked
-      ? (post.docData.like = post.docData.like - 1)
-      : (post.docData.like = post.docData.like + 1);
+  const updateChallenge = (challengeInviteRef,challengeInviteData) => {
+    // Add friend to challengers list
+    console.log(challengeInviteData.challengeMembers)
+    console.log(auth.currentUser.uid)
+    challengeInviteRef.update({
+      challengeMembers:  firebase.firestore.FieldValue.arrayUnion(auth.currentUser.uid),
+    })
 
-    setLiked(!liked);
-  };
+    // Remove from pending invites
+    updatePendingInvites(challengeInviteData.challengeId);
+
+  }
 
   return (
     <div className="workoutLogContainer">
       <div className="workoutLogFirst">
         <div className="workoutLogSecond">
-          <h2>{post.docData.challengeName}</h2>
-          <h3 className={post.docData.exerciseType.toLowerCase()}>
-            {post.docData.exerciseType}
+          <h2>{challengeInvite.docData.challengeName}</h2>
+          <h3 className={challengeInvite.docData.exerciseType.toLowerCase()}>
+            {challengeInvite.docData.exerciseType}
           </h3>
+          <h3>Challenger: <strong>{challengeInvite.docData.challenger}</strong></h3>
         </div>
-        <div className="workoutCount">0</div>
       </div>
-      <div className="likeContainer">
-        <label className="likeButton" class="like">
-          <input
-            onChange={(val) => likePost(post.doc.ref, post.docData.like)}
-            className="heartInput"
-            type="checkbox"
-            checked={liked}
-          />
-          <div class="hearth" />
+      <div className="acceptContainer">
+      <h3>Do you want to accept this challenge?</h3>
+        <label>
+          <button onClick={(val) => updateChallenge(challengeInvite.doc.ref, challengeInvite.docData)}
+          className="acceptbutton"
+          type="checkbox"
+            >
+            <FontAwesomeIcon  icon={ faCheck } color="green" size="3x"  ></FontAwesomeIcon>
+          </button>
         </label>
-        <h3 class="p-0 m-0">{post.docData.like || 0}</h3>
+        <label>
+          <button onClick={(val) => rejectPendingInvites(challengeInvite.docData.challengeId)}
+          className="rejectbutton"
+          type="checkbox"
+            >
+            <FontAwesomeIcon  icon={ faCancel } color="red" size="3x"  ></FontAwesomeIcon>
+          </button>
+        </label>
       </div>
     </div>
   );

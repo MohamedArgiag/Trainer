@@ -1,18 +1,20 @@
 import NavBar from "./navbar/Navbar"
-import { Line } from 'react-chartjs-2'
-import Chart from 'chart.js/auto'
+import { Line, Bar } from 'react-chartjs-2'
+import { Chart } from 'chart.js/auto'
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../firebase";
+import { color } from "@mui/material/node_modules/@mui/system";
 
 export default function Friend(){
-    const [postLists, setPostList] = useState([]);
+    const [weekdays, setWeekDays] = useState([]);
+    const [results, setResults] = useState([]);
     const posts = db
     .collection("users")
     .doc(auth.currentUser.uid)
     .collection("posts");
 
-    const disPosts = async () => {
+    const weekChart = async () => {
         let days = [];
         let today = moment();
         const results = [];
@@ -29,15 +31,14 @@ export default function Friend(){
             }
             day = today.subtract(1, 'days');
         }
-        setPostList(results);
         days.reverse();
         results.reverse();
-        console.log(results);
-        console.log(days);
+        setWeekDays(days)
+        setResults(results)
       };
 
     useEffect(() => {
-        disPosts();
+        weekChart();
     }, []);
 
 
@@ -45,17 +46,45 @@ export default function Friend(){
         <>
         <NavBar/>
 
-        <h1>Chart</h1>
+        <h2 className="w-100 text-center mb-5 mt-5">Weekly Progress</h2>
 
         <div>
             <Line
                 data={{
-                    labels: [],
+                    labels: weekdays,
                     datasets: [{
                         label: 'Number of Reps',
-                        data: [12, 19, 3, 5, 2, 26, 0],
+                        data: results,
                         backgroudColor: 'purple',
-                        borderColor: 'purple'
+                        borderColor: 'purple',
+                        
+                        
+                    }]
+                }}
+                height={300}
+                width={600}
+                options={{
+                    maintainAspectRatio: false,
+                }}
+
+            
+            />
+
+        </div>
+
+
+        <h2 className="w-100 text-center mb-5 mt-5">Today's Progress</h2>
+
+        <div>
+            <Bar
+                data={{
+                    labels: [ 'Friday'],
+                    datasets: [{
+                        label: 'Number of Reps',
+                        data: [10],
+                        backgroudColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        color:'red'
                         
                     }]
                 }}
