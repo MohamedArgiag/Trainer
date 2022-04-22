@@ -32,6 +32,7 @@ export default function CreateChallenge() {
       startDate: startDate,
       endDate: endDate,
       challengeMembers: [auth.currentUser.uid],
+      challengeId: "",
     });
 
     console.log(createdChallenge);
@@ -45,6 +46,10 @@ export default function CreateChallenge() {
         .update({
           pendingChallenges: firebase.firestore.FieldValue.arrayUnion(createdChallenge.id),
         });
+
+        await db.collection("challenges").doc(createdChallenge.id).update({
+          challengeId: createdChallenge.id,
+        })
     });
   };
 

@@ -20,6 +20,7 @@ import CreateChallenge from "./CreateChallenge"
 import BicepCurls from "./BicepCurls.js"
 import FriendChallenge from "./FriendChallenge.js"
 import Chat from "./Chat.js"
+import Chart from "./Chart.js"
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
               <Route path="/challengecreate" element={<CreateChallenge/>} />
               <Route path="/friendChallenge" element={<FriendChallenge/>} />
               <Route path="/chat" element={<Chat/>} />
+              <Route path="/chart" element={<Chart/>} />
             </Routes>
           </AuthProvider>
         </Router>

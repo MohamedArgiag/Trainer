@@ -32,6 +32,8 @@ h1{
     width: 30em;
     margin: auto;
     text-align: center;
+    border-radius: 25px;
+    box-shadow: 15px 15px 8px rgba(176, 169, 169, 0.7);
 }
 
 .LoginButton, .forgotButton{

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGear, faMedal, faDumbbell, faComments, faAddressBook  } from '@fortawesome/free-solid-svg-icons'
+import { faGear, faMedal, faDumbbell, faAddressBook, faChartLine  } from '@fortawesome/free-solid-svg-icons'
 import logo from "../../img/logo4.png"
 
 import { auth } from "../../firebase";
@@ -25,8 +25,8 @@ const NavBar= ()  =>{
         </li>
 
         <li className="navButton">
-          <a href="chat">
-          <FontAwesomeIcon  icon={ faComments } color="black" size="3x"  ></FontAwesomeIcon>
+          <a href="chart">
+          <FontAwesomeIcon  icon={ faChartLine } color="black" size="3x"  ></FontAwesomeIcon>
           </a>
         </li>
 

@@ -9,10 +9,12 @@ export default function Log() {
   const disPosts = async () => {
     const res = await user.where("email", "==", auth.currentUser.email).get();
     const friendList = res.docs.map(doc => doc.data())[0].friends;
+    console.log(friendList)
     const feed = [];
 
     for(let i = 0; i < friendList.length; i++){
       const friendPosts = await db.collection("users").doc(friendList[i]).collection("posts").get();
+      console.log(friendPosts)
       //const friendExercise = friendPosts.docs.map(doc => doc.data());
       const friendExercise = friendPosts.docs.map((doc) => {
         return { doc: doc, docData: doc.data() };

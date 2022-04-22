@@ -1,11 +1,13 @@
-import React from "react";
+import React , { useEffect } from "react";
 import "./FriendModal.css";
 import firebase from "firebase/app";
 import toast, { Toaster } from "react-hot-toast";
 import { db, auth } from "../firebase";
+import { TextField, Autocomplete } from "@mui/material"
 
 function Modal({ setOpenModal }) {
     const users = db.collection("users");
+    const options = ['The Godfather', 'Pulp Fiction']
 
     const addFriend = async () => {
         const email = document.getElementById("userEmail").value;
@@ -51,8 +53,17 @@ function Modal({ setOpenModal }) {
                   <h2>Add Friend?</h2>
               </div>
               <div className="body">
+
                   <span>
                       <input id="userEmail" type="email" placeholder="Search.." />
+                      <Autocomplete
+                        disablePortal
+                        id="userEmail"
+                        type="email"
+                        options={options}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Friend" />}
+                        />
                   </span>
               </div>
               <div className="footer">

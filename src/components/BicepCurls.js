@@ -6,6 +6,7 @@ import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 import NavBar from "./navbar/Navbar";
 import { db, auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 // import './BicepCurl.css'
 
@@ -54,8 +55,9 @@ const Counter = ({rightAngle, leftAngle}) => {
       uid: auth.currentUser.uid,
       email: auth.currentUser.email,
       time: Date(),
+      date: moment().format("DD/MM/yyyy"),
     });
-    navigate("/log");
+    navigate("/");
   };
 
   return (
