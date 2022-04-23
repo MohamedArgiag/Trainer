@@ -4,7 +4,6 @@ import { Chart } from 'chart.js/auto'
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../firebase";
-import { color } from "@mui/material/node_modules/@mui/system";
 
 export default function Friend(){
     const [weekdays, setWeekDays] = useState([]);
@@ -48,7 +47,7 @@ export default function Friend(){
 
         <h2 className="w-100 text-center mb-5 mt-5">Weekly Progress</h2>
 
-        <div>
+        <div className="">
             <Line
                 data={{
                     labels: weekdays,

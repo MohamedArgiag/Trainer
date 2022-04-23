@@ -56,14 +56,7 @@ function Modal({ setOpenModal }) {
 
                   <span>
                       <input id="userEmail" type="email" placeholder="Search.." />
-                      <Autocomplete
-                        disablePortal
-                        id="userEmail"
-                        type="email"
-                        options={options}
-                        sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="Friend" />}
-                        />
+                      
                   </span>
               </div>
               <div className="footer">

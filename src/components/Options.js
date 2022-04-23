@@ -2,8 +2,9 @@ import React from "react";
 import NavBar from "./navbar/Navbar";
 import "./Options.css";
 import pushup from "../img/Pushups-up.png";
-import pushupdown from "../img/Pushups-down.png";
+import squat from "../img/Squat.PNG";
 import curl from "../img/curl.jpg";
+
 
 export default function Option() {
   return (
@@ -21,7 +22,7 @@ export default function Option() {
 
         <div className="workoutOption">
           <h2 class="h2">Squat</h2>
-          <img className="workoutImage" src={pushupdown} alt="..."></img>
+          <img className="workoutImage" src={squat} alt="..."></img>
           <div class="but">
             <a href="/Squat">SQUAT</a>
           </div>
